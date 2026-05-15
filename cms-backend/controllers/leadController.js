@@ -1,6 +1,8 @@
 const Lead = require("../models/Lead");
 const XLSX = require("xlsx");
-const { getLeadAnalyticsFromExcel } = require("../utils/leadAnalyticsFromExcel");
+const {
+  getQuarterLeadAnalytics: buildQuarterLeadAnalytics
+} = require("../utils/leadQuarterAnalytics");
 
 // exports.getLeads = async (req, res) => {
 //   try {
@@ -361,7 +363,7 @@ exports.getQuarterLeadAnalytics = async (req, res) => {
   try {
     const parsedYear = Number.parseInt(req.query.year, 10);
     const year = Number.isNaN(parsedYear) ? undefined : parsedYear;
-    const analytics = getLeadAnalyticsFromExcel(year);
+    const analytics = await buildQuarterLeadAnalytics(year);
 
     res.json({
       generatedAt: new Date(),

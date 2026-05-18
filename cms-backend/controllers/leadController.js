@@ -363,7 +363,7 @@ exports.getQuarterLeadAnalytics = async (req, res) => {
   try {
     const parsedYear = Number.parseInt(req.query.year, 10);
     const year = Number.isNaN(parsedYear) ? undefined : parsedYear;
-    const analytics = await buildQuarterLeadAnalytics(year);
+    const analytics = getLeadAnalyticsFromExcel(year);
 
     res.json({
       generatedAt: new Date(),

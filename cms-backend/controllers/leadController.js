@@ -1,8 +1,6 @@
 const Lead = require("../models/Lead");
 const XLSX = require("xlsx");
-const {
-  getQuarterLeadAnalytics: buildQuarterLeadAnalytics
-} = require("../utils/leadQuarterAnalytics");
+const { getLeadAnalyticsFromExcel } = require("../utils/leadAnalyticsFromExcel");
 
 // exports.getLeads = async (req, res) => {
 //   try {

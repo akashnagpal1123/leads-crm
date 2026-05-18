@@ -5,6 +5,8 @@ const XLSX = require("xlsx");
 const EXCEL_FILE_PATH = path.join(__dirname, "..", "data.xlsx");
 const VALID_LEAD_SOURCES = new Set(["enquiry", "buy lead", "call enquiry"]);
 const QUARTERS = ["Q1", "Q2", "Q3", "Q4"];
+const QUARTER_ANALYTICS_MIN_YEAR = 2017;
+const QUARTER_ANALYTICS_MAX_YEAR = 2026;
 
 let cachedRows = [];
 let cachedModifiedTimeMs = null;
@@ -78,14 +80,12 @@ function ensureRowsLoaded() {
   return cachedRows;
 }
 
-function getAvailableYears(rows) {
-  const years = new Set();
-  rows.forEach((row) => {
-    if (row.createdAt instanceof Date && !Number.isNaN(row.createdAt.getTime())) {
-      years.add(row.createdAt.getFullYear());
-    }
-  });
-  return Array.from(years).sort((a, b) => a - b);
+function getAvailableYears() {
+  const years = [];
+  for (let year = QUARTER_ANALYTICS_MIN_YEAR; year <= QUARTER_ANALYTICS_MAX_YEAR; year += 1) {
+    years.push(year);
+  }
+  return years;
 }
 
 function aggregateTopValues(items, keyName, valueName, topLimit = 5) {
@@ -153,7 +153,7 @@ function buildQuarterAnalytics(rows, year) {
 
 function getLeadAnalyticsFromExcel(selectedYear) {
   const rows = ensureRowsLoaded();
-  const availableYears = getAvailableYears(rows);
+  const availableYears = getAvailableYears();
   const latestYear = availableYears[availableYears.length - 1] || null;
   const safeYear =
     Number.isInteger(selectedYear) && availableYears.includes(selectedYear)

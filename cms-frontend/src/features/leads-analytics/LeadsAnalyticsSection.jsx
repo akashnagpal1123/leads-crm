@@ -80,7 +80,6 @@ const LeadsAnalyticsSection = ({
 
             <RepeatEnquiriesCard data={analytics.repeatEnquirers} />
             <QuarterLeadListings
-              availableYears={yearlyAnalytics.availableYears}
               selectedYear={yearlyAnalytics.selectedYear}
               quarterWise={yearlyAnalytics.quarterWise}
               loading={quarterAnalyticsLoading}

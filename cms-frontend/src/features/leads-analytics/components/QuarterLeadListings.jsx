@@ -1,13 +1,18 @@
 const QUARTER_ORDER = ["Q1", "Q2", "Q3", "Q4"];
+const QUARTER_YEAR_MIN = 2017;
+const QUARTER_YEAR_MAX = 2026;
+const QUARTER_YEAR_OPTIONS = Array.from(
+  { length: QUARTER_YEAR_MAX - QUARTER_YEAR_MIN + 1 },
+  (_, index) => QUARTER_YEAR_MIN + index
+);
 
 const QuarterLeadListings = ({
-  availableYears,
   selectedYear,
   quarterWise,
   loading,
   onYearChange
 }) => {
-  const hasYears = availableYears.length > 0;
+  const hasYears = QUARTER_YEAR_OPTIONS.length > 0;
 
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:col-span-2 bg-gradient-to-r from-green-200 to-blue-100">
@@ -28,7 +33,7 @@ const QuarterLeadListings = ({
             disabled={!hasYears || loading}
           >
             {!hasYears ? <option value="">No year available</option> : null}
-            {availableYears.map((year) => (
+            {QUARTER_YEAR_OPTIONS.map((year) => (
               <option key={year} value={year}>
                 {year}
               </option>

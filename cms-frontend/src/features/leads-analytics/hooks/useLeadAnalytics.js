@@ -50,9 +50,10 @@ const useLeadAnalytics = (shouldLoad) => {
     setQuarterAnalyticsLoading(true);
     try {
       const res = await fetchQuarterLeadAnalytics(year);
+      const requestedYear = Number.isInteger(year) ? year : null;
       setYearlyAnalytics({
         availableYears: res.data.availableYears ?? [],
-        selectedYear: res.data.selectedYear ?? null,
+        selectedYear: requestedYear ?? res.data.selectedYear ?? null,
         quarterWise: res.data.quarterWise ?? {
           Q1: { topCities: [], topProducts: [], totalLeads: 0 },
           Q2: { topCities: [], topProducts: [], totalLeads: 0 },
